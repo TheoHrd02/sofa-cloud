@@ -1,0 +1,72 @@
+{
+    "_comment": "Sofa-Cloud — Fichier de thématique multi-tenant. Modifier ce fichier pour créer un nouveau tenant sans toucher au code.",
+    "tenant": {
+        "id": "sofa-cloud",
+        "name": "Sofa-Cloud",
+        "domain": "sofa-cloud.com",
+        "locale": "fr-FR",
+        "currency": "EUR"
+    },
+    "brand": {
+        "logo_url": "",
+        "logo_alt": "Sofa-Cloud — Mobilier Premium",
+        "favicon_url": "/favicon.ico",
+        "og_image_url": ""
+    },
+    "palette": {
+        "primary": "#1A1A2E",
+        "secondary": "#E8D5B0",
+        "accent": "#C9A96E",
+        "background": "#FAFAF8",
+        "surface": "#FFFFFF",
+        "text_primary": "#1A1A1A",
+        "text_secondary": "#6B6B6B",
+        "border": "#E5E5E5",
+        "error": "#C0392B",
+        "success": "#27AE60"
+    },
+    "typography": {
+        "font_heading": "Cormorant Garamond",
+        "font_body": "Inter",
+        "font_mono": "JetBrains Mono",
+        "font_base_size": "16px",
+        "font_scale_ratio": 1.25,
+        "google_fonts_url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500;600&display=swap"
+    },
+    "layout": {
+        "max_width": "1440px",
+        "container_padding": "1.5rem",
+        "header_style": "transparent_on_hero",
+        "footer_style": "minimal",
+        "border_radius": "4px",
+        "grid_columns": 12
+    },
+    "animations": {
+        "transition_duration": "300ms",
+        "transition_easing": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        "enable_parallax": true,
+        "enable_scroll_animations": true
+    },
+    "features": {
+        "video_hero": true,
+        "wishlist": true,
+        "product_360_view": false,
+        "live_chat": false,
+        "size_guide": true,
+        "compare_products": false,
+        "reviews": true,
+        "loyalty_program": false
+    },
+    "seo": {
+        "site_name": "Sofa-Cloud",
+        "title_template": "%s | Sofa-Cloud — Mobilier Premium",
+        "default_description": "Découvrez notre collection de canapés et meubles haut de gamme. Design épuré, qualité artisanale, livraison premium."
+    },
+    "integrations": {
+        "shopify_store_domain": "",
+        "cloudinary_cloud_name": "",
+        "analytics_id": "",
+        "hotjar_id": "",
+        "crisp_website_id": ""
+    }
+}

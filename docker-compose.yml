@@ -1,0 +1,95 @@
+# ─────────────────────────────────────────
+#  SOFA-CLOUD — Docker Compose
+#  Services : frontend | middleware | db
+# ─────────────────────────────────────────
+
+services:
+
+  # ── 1. FRONTEND — Hydrogen / Node 20 ───
+  frontend:
+    container_name: sofa_frontend
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./apps/frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PUBLIC_STORE_DOMAIN=${SHOPIFY_STORE_DOMAIN}
+      - PUBLIC_STOREFRONT_API_TOKEN=${SHOPIFY_STOREFRONT_API_TOKEN}
+      - MIDDLEWARE_API_URL=http://middleware:8000
+    depends_on:
+      - middleware
+    networks:
+      - sofa_network
+    restart: unless-stopped
+
+  # ── 2. MIDDLEWARE — FastAPI / Python 3.11 ──
+  middleware:
+    container_name: sofa_middleware
+    build:
+      context: ./apps/middleware
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/middleware:/app
+    environment:
+      - PYTHON_ENV=development
+      - CATALOG_PROVIDER=${CATALOG_PROVIDER:-local}
+      - DATABASE_URL=${DATABASE_URL}
+      - SHOPIFY_STORE_DOMAIN=${SHOPIFY_STORE_DOMAIN}
+      - SHOPIFY_STOREFRONT_API_TOKEN=${SHOPIFY_STOREFRONT_API_TOKEN}
+      - SHOPIFY_ADMIN_API_TOKEN=${SHOPIFY_ADMIN_API_TOKEN}
+      - SHOPIFY_API_VERSION=${SHOPIFY_API_VERSION}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - SECRET_KEY=${SECRET_KEY}
+      - INTERNAL_API_KEY=${INTERNAL_API_KEY}
+      - CORS_ORIGINS=${CORS_ORIGINS}
+      - SUPPLIER_API_KEY=${SUPPLIER_API_KEY}
+      - SUPPLIER_API_URL=${SUPPLIER_API_URL}
+      - SUPPLIER_SYNC_INTERVAL_HOURS=${SUPPLIER_SYNC_INTERVAL_HOURS}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - sofa_network
+    restart: unless-stopped
+
+  # ── 3. DATABASE — PostgreSQL 15 ─────────
+  db:
+    container_name: sofa_db
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sofa_network
+    restart: unless-stopped
+
+# ─────────────────────────────────────────
+#  VOLUMES & NETWORKS
+# ─────────────────────────────────────────
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  sofa_network:
+    driver: bridge

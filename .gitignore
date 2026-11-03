@@ -1,0 +1,75 @@
+# ═══════════════════════════════════════════════════
+#  SOFA-CLOUD — .gitignore
+# ═══════════════════════════════════════════════════
+
+# ─── Secrets & Environnement ────────────────────────
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ─── Node / Frontend ────────────────────────────────
+node_modules/
+.cache/
+build/
+dist/
+.parcel-cache/
+*.tsbuildinfo
+
+# ─── Python / Middleware ────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+ENV/
+pip-log.txt
+*.egg-info/
+.eggs/
+dist/
+*.dist-info/
+
+# ─── Docker ─────────────────────────────────────────
+# (ne pas ignorer docker-compose.yml ni les Dockerfiles)
+
+# ─── Database / Volumes ─────────────────────────────
+postgres_data/
+*.db
+
+# ─── IDE / Éditeurs ─────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ─── Logs ────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Tests & Coverage ────────────────────────────────
+.coverage
+htmlcov/
+.pytest_cache/
+coverage/
+.nyc_output/
+
+# ─── Alembic ─────────────────────────────────────────
+# (conserver les migrations, pas les lock temporaires)
+
+# ─── OS ───────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
